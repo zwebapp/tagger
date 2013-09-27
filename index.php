@@ -16,11 +16,11 @@ require_once 'TaggerModel.php';
 ---------------------------------------------------------------------------*/
 
 // This is to add the admin link for this page.
-osc_add_hook("init", "_load_scripts");
-osc_add_hook("init_admin", "_load_scripts");
+osc_add_hook("init", "_tagger_load_scripts");
+osc_add_hook("init_admin", "_tagger_load_scripts");
 
 // Initialize plugin informations and other necessary objects.
-function _load_scripts() {
+function _tagger_load_scripts() {
 
   osc_enqueue_style('tagit', osc_base_url() . 'oc-content/plugins/tagger/css/jquery.tagit.css');
   
@@ -36,10 +36,10 @@ function _load_scripts() {
 ---------------------------------------------------------------------------*/
 
 // This is needed in order to be able to activate the plugin
-osc_register_plugin(osc_plugin_path(__FILE__), '_install');
+osc_register_plugin(osc_plugin_path(__FILE__), '_tagger_install');
 
 // Set plugin preferences
-function _install() {
+function _tagger_install() {
 
   TaggerModel::newInstance()->import('tagger/struct.sql');
 
@@ -52,10 +52,10 @@ function _install() {
 ---------------------------------------------------------------------------*/
 
 // This is a hack to show a Uninstall link at plugins table (you could also use some other hook to show a custom option panel)
-osc_add_hook(osc_plugin_path(__FILE__)."_uninstall", '_uninstall');
+osc_add_hook(osc_plugin_path(__FILE__)."_uninstall", '_tagger_uninstall');
 
 // Delete plugin preferences
-function _uninstall() {
+function _tagger_uninstall() {
  
   TaggerModel::newInstance()->uninstall();
 
@@ -68,9 +68,9 @@ function _uninstall() {
 ---------------------------------------------------------------------------*/
 
 // This is a hack to show a Configure link at plugins table (you could also use some other hook to show a custom option panel)
-osc_add_hook(osc_plugin_path(__FILE__)."_configure", '_admin_configuration');
+osc_add_hook(osc_plugin_path(__FILE__)."_configure", '_tagger_admin_configuration');
 
-function _admin_configuration() {
+function _tagger_admin_configuration() {
 
     // Standard configuration page for plugin which extend item's attributes
     osc_plugin_configure_view(osc_plugin_path(__FILE__));
